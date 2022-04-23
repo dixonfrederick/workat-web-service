@@ -6,12 +6,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
-public class ViewGame {
+public class GameService {
 
     @Autowired
     private GameRepository gameRepo;
 
-    public GameObject returnGameObject(GameObject gameObject){
+    public GameObject createGame(GameObject gameObject){
         return gameObject;
     }
+
+    public GameObject viewGame(GameObject gameObject){
+        return gameObject;
+    }
+
+    /*
+    public GameObject submitAnswer(){
+        return
+    }
+    */
 }

@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.6.7'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "org.sonarqube" version "3.0"
 	id 'java'
 }
 
@@ -12,6 +13,14 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "AdvProg_reguler-2022_student_kelas-b_2006524896-Adrian-Ardizza_workat-project_workat-web-service_AYBW3n3bmTzPxwcesGd3"
+        property "sonar.host.url", "https://sonarqube.cs.ui.ac.id/"
+        property "sonar.login", "57f5d5ff933c9f36c4664525bdf6fba21a88faea"
+    }
 }
 
 repositories {

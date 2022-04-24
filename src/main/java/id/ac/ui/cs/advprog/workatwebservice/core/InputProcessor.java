@@ -10,7 +10,7 @@ public class InputProcessor{
     String answer;
     int attempts = 5;
 
-    InputProcessor(String answer){
+    public InputProcessor(String answer){
         this.answer = answer;
         // test answers
         wordList.add("WORDS");
@@ -19,6 +19,10 @@ public class InputProcessor{
         wordList.add("PARSE");
         wordList.add("STATE");
         wordList.add("FALSE");
+    }
+
+    public List<String> getWordList() {
+        return wordList;
     }
 
     public JSONObject checkIfInputIsAnswer(String input){

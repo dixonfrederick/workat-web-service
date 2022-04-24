@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.workatwebservice.service;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
+import net.minidev.json.JSONObject;
 
 public interface GameService {
 
@@ -8,5 +9,5 @@ public interface GameService {
 
     GameObject viewGame(String id);
 
-    //GameObject submitAnswer();
+    JSONObject submitAnswer(String gameId, String input);
 }

@@ -30,17 +30,18 @@ public class InputProcessor{
     public Result checkIfInputIsAnswer(String input, GameObject gameObject){
         Result result = new Result();
         int attempts = 5 - gameObject.getJumlahAttempt();
+        result.setAttemptsLeft(attempts);
 
         if (input.length() != 5){
-            result.setError("input must have exactly 5 letters");
+            result.setError("Input must have exactly 5 letters");
             return result;
         }
         else if (!wordList.contains(input)){
-            result.setError("input is invalid");
+            result.setError("Word is not in dictionary");
             return result;
         }
         else if (attempts <= 0){
-            result.setError("ran out of attempts");
+            result.setError("Ran out of attempts");
             return result;
         }
         else {

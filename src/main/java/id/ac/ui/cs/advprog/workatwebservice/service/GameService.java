@@ -15,7 +15,8 @@ public class GameService {
         return gameObject;
     }
 
-    public GameObject viewGame(GameObject gameObject){
+    public GameObject viewGame(String id) {
+        GameObject gameObject = gameRepo.GetById(id);
         return gameObject;
     }
 

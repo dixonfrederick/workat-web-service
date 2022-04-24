@@ -1,8 +1,13 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
+import id.ac.ui.cs.advprog.workatwebservice.core.answer.Answer;
+import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 import id.ac.ui.cs.advprog.workatwebservice.service.GameService;
 import net.minidev.json.JSONObject;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +38,13 @@ public class GameController {
 
     @PostMapping(path = "/{id}", produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity submitAnswer(@RequestBody String gameId, @RequestBody String answer) {
-        JSONObject response = gameService.submitAnswer(gameId, answer);
-        return ResponseEntity.ok(response);
+    public ResponseEntity submitAnswer(@PathVariable(value = "id") String id, @RequestBody Answer answerObject) {
+        try {
+            Result response = gameService.submitAnswer(id, answerObject.getAnswer());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
     }
 }

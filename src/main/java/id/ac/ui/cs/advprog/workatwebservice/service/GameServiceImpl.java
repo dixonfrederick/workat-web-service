@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.workatwebservice.service;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.InputProcessor;
+import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 import id.ac.ui.cs.advprog.workatwebservice.core.helper.RandomString;
 import id.ac.ui.cs.advprog.workatwebservice.repository.GameRepository;
 import net.minidev.json.JSONObject;
@@ -35,10 +36,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public JSONObject submitAnswer(String gameId, String input) {
+    public Result submitAnswer(String gameId, String input) {
         GameObject game = gameRepository.getById(gameId);
         InputProcessor inputProcessor = new InputProcessor(game.getCorrectWord());
 
-        return inputProcessor.checkIfInputIsAnswer(input);
+        return inputProcessor.checkIfInputIsAnswer(input, game);
     }
 }

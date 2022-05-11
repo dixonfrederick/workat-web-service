@@ -1,32 +1,31 @@
 package id.ac.ui.cs.advprog.workatwebservice.repository;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
+import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-import java.util.Collection;
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameRepositoryTest {
 
+    @Mock
     private GameRepository gameRepository;
 
     private GameObject gameObject;
 
     @BeforeEach
     public void setUp() {
-        gameRepository = new GameRepository();
         gameObject = new GameObject();
-        gameRepository.create(gameObject);
+        gameRepository.save(gameObject);
     }
 
     @Test
-    public void whenFindItemByNameAndTypeShouldReturnCorrectObject() throws Exception {
+    public void whenFindItemByNameAndTypeShouldReturnCorrectObject() { // TODO: Need to be changed, null
         GameObject dummyGameObject = new GameObject();
         dummyGameObject.setGameId("0");
-        gameRepository.create(dummyGameObject);
+        gameRepository.save(dummyGameObject);
 
-        assertEquals(gameRepository.getById("0"),dummyGameObject);
+        assertEquals(gameRepository.findById("0"),dummyGameObject);
     }
 }

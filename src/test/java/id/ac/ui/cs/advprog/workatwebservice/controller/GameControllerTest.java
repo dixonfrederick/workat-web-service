@@ -1,6 +1,6 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
+import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 import id.ac.ui.cs.advprog.workatwebservice.service.GameService;
 import org.junit.jupiter.api.BeforeEach;

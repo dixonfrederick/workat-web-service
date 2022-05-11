@@ -1,6 +1,6 @@
 package id.ac.ui.cs.advprog.workatwebservice.service;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
+import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,6 @@ public class GameServiceTest {
     public void setUp() {
         gameObject = new GameObject();
         gameObject.setGameId("0");
-        gameRepository.create(gameObject);
     }
 
     @Test
@@ -45,7 +44,7 @@ public class GameServiceTest {
     @Test
     public void testSubmitAnswer(){
         gameObject.setCorrectWord("TESTS");
-        lenient().when(gameRepository.getById("0")).thenReturn(gameObject);
+        lenient().when(gameRepository.findById("0")).thenReturn(gameObject);
         ReflectionTestUtils.setField(gameService, "gameRepository", gameRepository);
         assertEquals(gameService.submitAnswer("0", "TESTS").getLetterStates(), "BBBBB");
 

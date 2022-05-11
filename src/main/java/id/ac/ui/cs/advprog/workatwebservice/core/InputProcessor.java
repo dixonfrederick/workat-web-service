@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.workatwebservice.core;
 
-import net.minidev.json.JSONObject;
+import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class InputProcessor{
 
     public Result checkIfInputIsAnswer(String input, GameObject gameObject){
         Result result = new Result();
-        int attempts = 5 - gameObject.getJumlahAttempt();
+        int attempts = 5 - gameObject.getAttemptAmount();
         result.setAttemptsLeft(attempts);
 
         if (input.length() != 5){
@@ -50,7 +51,7 @@ public class InputProcessor{
             String res = "";
             boolean status;
 
-            gameObject.setJumlahAttempt(gameObject.getJumlahAttempt() + 1);
+            gameObject.setAttemptAmount(gameObject.getAttemptAmount() + 1);
 
             for (int i = 0; i < 5; i++) {
                 if (wordChars.get(i).equals(answerChars.get(i))) {
@@ -67,7 +68,7 @@ public class InputProcessor{
 
             result.setLetterStates(res);
             result.setCorrect(status);
-            result.setAttemptsLeft(5 - gameObject.getJumlahAttempt());
+            result.setAttemptsLeft(5 - gameObject.getAttemptAmount());
 
             return result;
         }

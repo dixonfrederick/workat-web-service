@@ -1,13 +1,9 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.GameObject;
+import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Answer;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 import id.ac.ui.cs.advprog.workatwebservice.service.GameService;
-import net.minidev.json.JSONObject;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

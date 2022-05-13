@@ -44,7 +44,7 @@ public class GameServiceTest {
     @Test
     public void testSubmitAnswer(){
         gameObject.setCorrectWord("TESTS");
-        lenient().when(gameRepository.findById("0")).thenReturn(gameObject);
+        lenient().when(gameRepository.findByGameId("0")).thenReturn(gameObject);
         ReflectionTestUtils.setField(gameService, "gameRepository", gameRepository);
         assertEquals(gameService.submitAnswer("0", "TESTS").getLetterStates(), "BBBBB");
 

@@ -29,12 +29,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameObject viewGame(String id) {
-        return gameRepository.findById(id);
+        return gameRepository.findByGameId(id);
     }
 
     @Override
     public Result submitAnswer(String gameId, String input) {
-        GameObject game = gameRepository.findById(gameId);
+        GameObject game = gameRepository.findByGameId(gameId);
         InputProcessor inputProcessor = new InputProcessor(game.getCorrectWord());
 
         return inputProcessor.checkIfInputIsAnswer(input, game);

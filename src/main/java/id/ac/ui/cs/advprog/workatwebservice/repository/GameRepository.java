@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GameRepository extends JpaRepository<GameObject, Integer> {
-    GameObject findById(String id);
+    GameObject findByGameId(String id);
 }

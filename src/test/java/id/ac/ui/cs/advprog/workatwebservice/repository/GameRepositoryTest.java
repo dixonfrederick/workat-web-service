@@ -26,6 +26,6 @@ public class GameRepositoryTest {
         dummyGameObject.setGameId("0");
         gameRepository.save(dummyGameObject);
 
-        assertEquals(gameRepository.findById("0"),dummyGameObject);
+        assertEquals(gameRepository.findByGameId("0"),dummyGameObject);
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StatsRepository extends JpaRepository<Stats, Integer> {
-    Stats findById(int id);
+    Stats findById(String id);
 }

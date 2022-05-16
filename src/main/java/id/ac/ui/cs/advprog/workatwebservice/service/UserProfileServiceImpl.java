@@ -19,7 +19,7 @@ public class UserProfileServiceImpl implements UserProfileService{
 
     @Override
     public User createUser(String id) {
-        User newUser = new User('', '');
+        User newUser = new User(id, "");
         userRepository.save(newUser);
         return newUser;
     }
@@ -32,6 +32,6 @@ public class UserProfileServiceImpl implements UserProfileService{
 
     @Override
     public User getUser(String id) {
-        return userRepository.findById(Integer.parseInt(id));
+        return userRepository.findById(id);
     }
 }

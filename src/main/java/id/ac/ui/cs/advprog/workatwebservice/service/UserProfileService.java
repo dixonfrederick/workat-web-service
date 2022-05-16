@@ -6,9 +6,9 @@ import id.ac.ui.cs.advprog.workatwebservice.model.User;
 public interface UserProfileService {
     Iterable<User> getListUser();
 
-    Stats createUser(String id);
+    User createUser(String id);
 
-    Stats updateUser(String id, GameObject gameObject);
+    User updateUser(String id, GameObject gameObject);
 
-    Stats getUser(String id);
+    User getUser(String id);
 }

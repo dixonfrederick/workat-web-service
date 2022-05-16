@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.workatwebservice.model;
 
+import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,10 @@ public class User {
 
     @Column(name = "status")
     private String status;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Stats stats;
 
     public User(String userId, String status){
         this.userId = userId;

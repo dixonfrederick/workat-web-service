@@ -1,7 +1,9 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
+import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.model.User;
+import id.ac.ui.cs.advprog.workatwebservice.service.StatsService;
 import id.ac.ui.cs.advprog.workatwebservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ public class UserController {
     @Autowired
     private UserProfileService userService;
 
+    @Autowired
+    private StatsService statsService;
+
     @GetMapping(produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<Iterable<User>> getListUser() {
@@ -25,7 +30,8 @@ public class UserController {
     @PostMapping(produces = {"application/json"})
     @ResponseBody
     public ResponseEntity createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+        User createdUser = userService.createUser(user);
+        return ResponseEntity.ok(createdUser);
     }
 
     @PutMapping(path = "/{id}", produces = {"application/json"})

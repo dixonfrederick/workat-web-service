@@ -1,7 +1,9 @@
 package id.ac.ui.cs.advprog.workatwebservice.service;
 
+import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.model.User;
+import id.ac.ui.cs.advprog.workatwebservice.repository.StatsRepository;
 import id.ac.ui.cs.advprog.workatwebservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,12 @@ public class UserProfileServiceImpl implements UserProfileService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private StatsRepository statsRepository;
+
+    @Autowired
+    private StatsService statsService;
+
     @Override
     public Iterable<User> getListUser() {
         return userRepository.findAll();
@@ -22,6 +30,7 @@ public class UserProfileServiceImpl implements UserProfileService{
     @Override
     public User createUser(User user) {
         userRepository.save(user);
+        statsService.createStats(user.getUserId());
         return user;
     }
 

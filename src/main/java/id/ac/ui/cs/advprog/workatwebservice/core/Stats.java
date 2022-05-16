@@ -1,10 +1,12 @@
 package id.ac.ui.cs.advprog.workatwebservice.core;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "Stats")
 @NoArgsConstructor
 public class Stats {

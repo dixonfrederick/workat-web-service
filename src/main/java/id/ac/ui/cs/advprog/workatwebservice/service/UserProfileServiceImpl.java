@@ -6,6 +6,8 @@ import id.ac.ui.cs.advprog.workatwebservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserProfileServiceImpl implements UserProfileService{
 
@@ -24,14 +26,14 @@ public class UserProfileServiceImpl implements UserProfileService{
         return newUser;
     }
 
-    @Override //SAMPE SINI
+    @Override
     public User updateUser(String id, GameObject gameObject) {
         User updatedUser = userRepository.getById(id);
         return updatedUser;
     }
 
     @Override
-    public User getUser(String id) {
+    public Optional<User> getUser(String id) {
         return userRepository.findById(id);
     }
 }

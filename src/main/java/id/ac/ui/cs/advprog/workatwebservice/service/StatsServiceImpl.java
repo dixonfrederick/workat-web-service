@@ -6,6 +6,8 @@ import id.ac.ui.cs.advprog.workatwebservice.repository.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class StatsServiceImpl implements StatsService{
 
@@ -35,7 +37,7 @@ public class StatsServiceImpl implements StatsService{
     }
 
     @Override
-    public Stats getStats(String id) {
+    public Optional<Stats> getStats(String id) {
         return statsRepository.findById(id);
     }
 }

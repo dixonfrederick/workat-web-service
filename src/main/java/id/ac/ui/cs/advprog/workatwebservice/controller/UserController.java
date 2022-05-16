@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/api/user")
 public class UserController {
@@ -35,8 +37,8 @@ public class UserController {
     @GetMapping(path = "/{id}", produces = {"application/json"})
     @ResponseBody
     public ResponseEntity getUser(@PathVariable(value = "id") String id) {
-        User user = userService.getUser(id);
-        if (user == null) {
+        Optional<User> user = userService.getUser(id);
+        if (user.isEmpty()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(user);

@@ -3,6 +3,8 @@ package id.ac.ui.cs.advprog.workatwebservice.service;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
 
+import java.util.Optional;
+
 public interface StatsService {
     Iterable<Stats> getListStats();
 
@@ -10,5 +12,5 @@ public interface StatsService {
 
     Stats updateStats(String id, GameObject gameObject);
 
-    Stats getStats(String id);
+    Optional<Stats> getStats(String id);
 }

@@ -25,7 +25,6 @@ public class UserController {
     @PostMapping(produces = {"application/json"})
     @ResponseBody
     public ResponseEntity createUser(@RequestBody User user) {
-        System.out.println(user.getUserId());
         return ResponseEntity.ok(userService.createUser(user));
     }
 

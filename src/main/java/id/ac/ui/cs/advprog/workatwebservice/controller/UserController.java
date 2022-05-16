@@ -24,14 +24,15 @@ public class UserController {
 
     @PostMapping(produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity createUser(String id) {
-        return ResponseEntity.ok(userService.createUser(id));
+    public ResponseEntity createUser(@RequestBody User user) {
+        System.out.println(user.getUserId());
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
     @PutMapping(path = "/{id}", produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity updateUser(@PathVariable(value = "id") String id, @RequestBody GameObject gameobject) {
-        return ResponseEntity.ok(userService.updateUser(id, gameobject));
+    public ResponseEntity updateUser(@PathVariable(value = "id") String id, @RequestBody User user) {
+        return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
     @GetMapping(path = "/{id}", produces = {"application/json"})

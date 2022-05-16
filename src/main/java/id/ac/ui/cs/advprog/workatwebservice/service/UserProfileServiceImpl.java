@@ -20,16 +20,15 @@ public class UserProfileServiceImpl implements UserProfileService{
     }
 
     @Override
-    public User createUser(String id) {
-        User newUser = new User(id, "");
-        userRepository.save(newUser);
-        return newUser;
+    public User createUser(User user) {
+        userRepository.save(user);
+        return user;
     }
 
     @Override
-    public User updateUser(String id, GameObject gameObject) {
-        User updatedUser = userRepository.getById(id);
-        return updatedUser;
+    public User updateUser(String id, User user) {
+        userRepository.save(user);
+        return user;
     }
 
     @Override

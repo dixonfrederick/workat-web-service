@@ -2,16 +2,16 @@ package id.ac.ui.cs.advprog.workatwebservice.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User")
 @Data
+@Table(name = "User")
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = true)
     private String userId;
 
     @Column(name = "status")

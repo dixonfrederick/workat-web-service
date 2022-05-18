@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class GameServiceTest {
+class GameServiceTest {
     @Mock
     private GameRepository gameRepository;
 
@@ -28,13 +28,13 @@ public class GameServiceTest {
     }
 
     @Test
-    public void testCreateCategory() {
+    void testCreateCategory() {
         ReflectionTestUtils.setField(gameService, "gameRepository", gameRepository);
         lenient().when(gameService.createGame(gameObject)).thenReturn(gameObject);
     }
 
     @Test
-    public void testViewGame() {
+    void testViewGame() {
         ReflectionTestUtils.setField(gameService, "gameRepository", gameRepository);
         lenient().when(gameService.viewGame("0")).thenReturn(gameObject);
         GameObject calledGame = gameService.viewGame("0");
@@ -42,12 +42,11 @@ public class GameServiceTest {
     }
 
     @Test
-    public void testSubmitAnswer(){
+    void testSubmitAnswer(){
         gameObject.setCorrectWord("TESTS");
         lenient().when(gameRepository.findByGameId("0")).thenReturn(gameObject);
         ReflectionTestUtils.setField(gameService, "gameRepository", gameRepository);
-        assertEquals(gameService.submitAnswer("0", "TESTS").getLetterStates(), "BBBBB");
-
+        assertEquals("BBBBB", gameService.submitAnswer("0", "TESTS").getLetterStates());
     }
 
 }

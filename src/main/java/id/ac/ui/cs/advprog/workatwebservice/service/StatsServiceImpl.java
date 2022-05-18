@@ -26,7 +26,7 @@ public class StatsServiceImpl implements StatsService{
 
     @Override
     public Stats createStats(String id) {
-        Stats newStats = new Stats(id, 0, 0, 0);
+        var newStats = new Stats(id, 0, 0, 0);
         newStats.setUser(userRepository.findByUserId(id));
         statsRepository.save(newStats);
         return newStats;
@@ -34,7 +34,7 @@ public class StatsServiceImpl implements StatsService{
 
     @Override
     public Stats updateStats(String id, GameObject gameObject) {
-        Stats updatedStats = statsRepository.getById(id);
+        var updatedStats = statsRepository.getById(id);
         int avg = updatedStats.getAverageAttempt();
         updatedStats.setAverageAttempt((avg * (updatedStats.getTotalKalah() + updatedStats.getTotalMenang())
                 + gameObject.getAttemptAmount()) /

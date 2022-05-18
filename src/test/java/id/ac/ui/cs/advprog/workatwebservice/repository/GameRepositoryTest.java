@@ -7,7 +7,7 @@ import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GameRepositoryTest {
+class GameRepositoryTest {
 
     @Mock
     private GameRepository gameRepository;

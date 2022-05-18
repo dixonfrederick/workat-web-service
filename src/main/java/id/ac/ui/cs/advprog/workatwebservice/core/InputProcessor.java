@@ -73,22 +73,23 @@ public class InputProcessor{
         else {
             List<Character> wordChars = input.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
             List<Character> answerChars = answer.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
-            String res = "";
+            StringBuilder build = new StringBuilder();
             boolean status;
 
             gameObject.setAttemptAmount(gameObject.getAttemptAmount() + 1);
 
             for (int i = 0; i < 5; i++) {
                 if (wordChars.get(i).equals(answerChars.get(i))) {
-                    res += "B";
+                    build.append("B");
                     answerChars.set(i, '0');
                 } else if (answerChars.contains(wordChars.get(i))) {
-                    res += "S";
+                    build.append("S");
                 } else {
-                    res += "N";
+                    build.append("N");
                 }
             }
 
+            String res = build.toString();
             status = res.equals("BBBBB");
 
             result.setLetterStates(res);

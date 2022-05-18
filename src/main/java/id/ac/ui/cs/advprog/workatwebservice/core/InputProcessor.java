@@ -1,39 +1,37 @@
 package id.ac.ui.cs.advprog.workatwebservice.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import id.ac.ui.cs.advprog.workatwebservice.core.helper.Services;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Component
 public class InputProcessor{
-    ArrayList<String> wordList = new ArrayList<>();
-    String answer;
-
-    public InputProcessor(String answer){
-        this.answer = answer;
-    }
+    @Autowired
+    private WebClient client;
 
     private boolean wordIsRegistered(String attempt) {
-        var client = WebClient.create(Services.WORD_SERVICE_URL);
         try {
             Future<Boolean> wordExists = CompletableFuture.supplyAsync(() -> {
-                var mapper = new ObjectMapper();
+                ObjectMapper mapper = new ObjectMapper();
 
                 Mono<String> response = client
                         .get()
-                        .uri("/api/word/" + attempt.toLowerCase())
+                        .uri("http://WORDS-SERVICE/api/word/" + attempt.toLowerCase())
                         .retrieve()
                         .bodyToMono(String.class);
+
 
                 String json = response.block();
                 try {
@@ -44,14 +42,13 @@ public class InputProcessor{
                 }
             });
             return wordExists.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Thread.currentThread().interrupt();
+        } catch (Exception e) {
             return false;
         }
-    }
+    };
 
     public Result checkIfInputIsAnswer(String input, GameObject gameObject){
-        var result = new Result();
+        Result result = new Result();
         int attempts = 5 - gameObject.getAttemptAmount();
         result.setAttemptsLeft(attempts);
 
@@ -69,24 +66,23 @@ public class InputProcessor{
         }
         else {
             List<Character> wordChars = input.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
-            List<Character> answerChars = answer.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
-            var build = new StringBuilder();
+            List<Character> answerChars = gameObject.getCorrectWord().chars().mapToObj(e -> (char) e).collect(Collectors.toList());
+            String res = "";
             boolean status;
 
             gameObject.setAttemptAmount(gameObject.getAttemptAmount() + 1);
 
             for (int i = 0; i < 5; i++) {
                 if (wordChars.get(i).equals(answerChars.get(i))) {
-                    build.append("B");
+                    res += "B";
                     answerChars.set(i, '0');
                 } else if (answerChars.contains(wordChars.get(i))) {
-                    build.append("S");
+                    res += "S";
                 } else {
-                    build.append("N");
+                    res += "N";
                 }
             }
 
-            var res = build.toString();
             status = res.equals("BBBBB");
 
             result.setLetterStates(res);

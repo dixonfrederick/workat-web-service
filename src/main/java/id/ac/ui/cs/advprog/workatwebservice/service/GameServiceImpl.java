@@ -2,7 +2,6 @@ package id.ac.ui.cs.advprog.workatwebservice.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import id.ac.ui.cs.advprog.workatwebservice.core.helper.Services;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.InputProcessor;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
@@ -25,15 +24,20 @@ public class GameServiceImpl implements GameService {
     @Autowired
     private GameRepository gameRepository;
 
+    @Autowired
+    private WebClient client;
+
+    @Autowired
+    private InputProcessor inputProcessor;
+
     @Override
     public GameObject createGame(GameObject gameObject){
         Future<String> randomWord = CompletableFuture.supplyAsync(() -> {
-            WebClient client = WebClient.create(Services.WORD_SERVICE_URL);
             ObjectMapper mapper = new ObjectMapper();
 
             Mono<String> response = client
                     .get()
-                    .uri("/api/word")
+                    .uri("http://WORDS-SERVICE/api/word")
                     .retrieve()
                     .bodyToMono(String.class);
 
@@ -42,6 +46,7 @@ public class GameServiceImpl implements GameService {
                 JsonNode root = mapper.readTree(json);
                 return root.path("word").asText().toUpperCase();
             } catch (Exception e) {
+                System.out.println("HERE");
                 return "";
             }
         });
@@ -69,7 +74,6 @@ public class GameServiceImpl implements GameService {
     @Override
     public Result submitAnswer(String gameId, String input) {
         GameObject game = gameRepository.findByGameId(gameId);
-        InputProcessor inputProcessor = new InputProcessor(game.getCorrectWord());
 
         return inputProcessor.checkIfInputIsAnswer(input, game);
     }

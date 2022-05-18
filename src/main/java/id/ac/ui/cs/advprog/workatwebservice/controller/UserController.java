@@ -18,9 +18,6 @@ public class UserController {
     @Autowired
     private UserProfileService userService;
 
-    @Autowired
-    private StatsService statsService;
-
     @GetMapping(produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<Iterable<User>> getListUser() {

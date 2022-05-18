@@ -10,7 +10,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class GameObject {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "game_id", updatable = false, nullable = false)
     private String gameId;
 

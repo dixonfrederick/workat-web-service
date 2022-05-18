@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
+import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Answer;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
@@ -41,6 +42,16 @@ public class GameController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    }
 
+    @PostMapping(path = "/update/{id}", produces = {"application/json"})
+    @ResponseBody
+    public ResponseEntity updateUserStats(@PathVariable(value = "id") String id, @RequestBody GameObject gameObject) {
+        try {
+            Stats response = gameService.updateUserStats(id, gameObject);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }

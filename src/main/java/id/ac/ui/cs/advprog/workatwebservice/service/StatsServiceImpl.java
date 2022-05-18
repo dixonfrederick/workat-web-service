@@ -35,9 +35,16 @@ public class StatsServiceImpl implements StatsService{
     public Stats updateStats(String id, GameObject gameObject) {
         var updatedStats = statsRepository.getById(id);
         int avg = updatedStats.getAverageAttempt();
-        updatedStats.setAverageAttempt((avg * (updatedStats.getTotalKalah() + updatedStats.getTotalMenang())
-                + gameObject.getAttemptAmount()) /
-                (updatedStats.getTotalKalah() + updatedStats.getTotalMenang() + 1));
+        int totalMenang = updatedStats.getTotalMenang();
+        int totalKalah = updatedStats.getTotalKalah();
+        updatedStats.setAverageAttempt((avg * (totalKalah + totalMenang) + gameObject.getAttemptAmount())
+                / (totalKalah + totalMenang + 1));
+        if (gameObject.isFinalState()){
+            updatedStats.setTotalMenang(totalMenang + 1);
+        }
+        else {
+            updatedStats.setTotalKalah(totalKalah + 1);
+        }
         return updatedStats;
     }
 

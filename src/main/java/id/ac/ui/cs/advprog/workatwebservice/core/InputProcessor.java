@@ -1,32 +1,51 @@
 package id.ac.ui.cs.advprog.workatwebservice.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+@Component
 public class InputProcessor{
-    ArrayList<String> wordList = new ArrayList<>();
-    String answer;
+    @Autowired
+    private WebClient client;
 
-    public InputProcessor(String answer){
-        this.answer = answer;
-        // test answers
-        wordList.add("WORDS");
-        wordList.add("ARRAY");
-        wordList.add("INPUT");
-        wordList.add("PARSE");
-        wordList.add("STATE");
-        wordList.add("FALSE");
-        wordList.add("TESTS");
-    }
+    private boolean wordIsRegistered(String attempt) {
+        try {
+            Future<Boolean> wordExists = CompletableFuture.supplyAsync(() -> {
+                ObjectMapper mapper = new ObjectMapper();
 
-    public List<String> getWordList() {
-        return wordList;
-    }
+                Mono<String> response = client
+                        .get()
+                        .uri("http://WORDS-SERVICE/api/word/" + attempt.toLowerCase())
+                        .retrieve()
+                        .bodyToMono(String.class);
+
+
+                String json = response.block();
+                try {
+                    mapper.readTree(json).path("word");
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
+            });
+            return wordExists.get();
+        } catch (Exception e) {
+            return false;
+        }
+    };
 
     public Result checkIfInputIsAnswer(String input, GameObject gameObject){
         Result result = new Result();
@@ -37,7 +56,7 @@ public class InputProcessor{
             result.setError("Input must have exactly 5 letters");
             return result;
         }
-        else if (!wordList.contains(input)){
+        else if (!wordIsRegistered(input)){
             result.setError("Word is not in dictionary");
             return result;
         }
@@ -47,7 +66,7 @@ public class InputProcessor{
         }
         else {
             List<Character> wordChars = input.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
-            List<Character> answerChars = answer.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
+            List<Character> answerChars = gameObject.getCorrectWord().chars().mapToObj(e -> (char) e).collect(Collectors.toList());
             String res = "";
             boolean status;
 

@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 
@@ -61,7 +62,7 @@ public class GameServiceImpl implements GameService {
             });
 
             return gameObject;
-        } catch (Exception e) {
+        } catch (InterruptedException | ExecutionException e) {
             return null;
         }
     };

@@ -21,7 +21,7 @@ class GameRepositoryTest {
     }
 
     @Test
-    public void whenFindItemByNameAndTypeShouldReturnCorrectObject() { // TODO: Need to be changed, null
+    void whenFindItemByNameAndTypeShouldReturnCorrectObject() { // TODO: Need to be changed, null
         GameObject dummyGameObject = new GameObject();
         dummyGameObject.setGameId("0");
         gameRepository.save(dummyGameObject);

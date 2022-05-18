@@ -38,7 +38,7 @@ public class StatsController {
     @ResponseBody
     public ResponseEntity<Optional<Stats>> getStats(@PathVariable(value = "id") String id) {
         Optional<Stats> stats = statsService.getStats(id);
-        if (stats == null) {
+        if (stats.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(stats);

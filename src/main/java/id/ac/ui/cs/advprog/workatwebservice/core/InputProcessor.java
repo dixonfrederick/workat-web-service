@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.workatwebservice.core;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import id.ac.ui.cs.advprog.workatwebservice.core.helper.Services;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
@@ -8,12 +7,11 @@ import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -26,11 +24,10 @@ public class InputProcessor{
     }
 
     private boolean wordIsRegistered(String attempt) {
-        WebClient client = WebClient.create(Services.WORD_SERVICE_URL);
-        System.out.println(Services.WORD_SERVICE_URL);
+        var client = WebClient.create(Services.WORD_SERVICE_URL);
         try {
             Future<Boolean> wordExists = CompletableFuture.supplyAsync(() -> {
-                ObjectMapper mapper = new ObjectMapper();
+                var mapper = new ObjectMapper();
 
                 Mono<String> response = client
                         .get()
@@ -47,14 +44,14 @@ public class InputProcessor{
                 }
             });
             return wordExists.get();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (InterruptedException | ExecutionException e) {
+            Thread.currentThread().interrupt();
             return false;
         }
-    };
+    }
 
     public Result checkIfInputIsAnswer(String input, GameObject gameObject){
-        Result result = new Result();
+        var result = new Result();
         int attempts = 5 - gameObject.getAttemptAmount();
         result.setAttemptsLeft(attempts);
 
@@ -73,7 +70,7 @@ public class InputProcessor{
         else {
             List<Character> wordChars = input.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
             List<Character> answerChars = answer.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
-            StringBuilder build = new StringBuilder();
+            var build = new StringBuilder();
             boolean status;
 
             gameObject.setAttemptAmount(gameObject.getAttemptAmount() + 1);
@@ -89,7 +86,7 @@ public class InputProcessor{
                 }
             }
 
-            String res = build.toString();
+            var res = build.toString();
             status = res.equals("BBBBB");
 
             result.setLetterStates(res);

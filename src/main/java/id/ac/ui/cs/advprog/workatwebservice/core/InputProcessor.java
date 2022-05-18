@@ -95,9 +95,6 @@ public class InputProcessor{
             result.setCorrect(status);
             result.setAttemptsLeft(5 - gameObject.getAttemptAmount());
 
-            System.out.println(input);
-            System.out.println(answer);
-
             return result;
         }
     }

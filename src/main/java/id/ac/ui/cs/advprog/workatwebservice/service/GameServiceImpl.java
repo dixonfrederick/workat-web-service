@@ -40,7 +40,6 @@ public class GameServiceImpl implements GameService {
             String json = response.block();
             try {
                 JsonNode root = mapper.readTree(json);
-                System.out.println(root.asText());
                 return root.path("word").asText().toUpperCase();
             } catch (Exception e) {
                 return "";

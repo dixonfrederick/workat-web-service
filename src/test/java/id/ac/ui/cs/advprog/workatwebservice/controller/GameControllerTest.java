@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(controllers = GameController.class)
-public class GameControllerTest {
+class GameControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -31,7 +31,7 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testCreateGame() throws Exception {
+    void testCreateGame() throws Exception {
         when(gameService.createGame(gameObject)).thenReturn(gameObject);
 
         mockMvc.perform(post("/api/game")
@@ -39,14 +39,14 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testViewGame() throws Exception {
+    void testViewGame() throws Exception {
         when(gameService.viewGame(String.valueOf(0))).thenReturn(gameObject);
 
         mockMvc.perform(get("/api/game/0").contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void testSubmitAnswer() throws Exception {
+    void testSubmitAnswer() throws Exception {
         when(gameService.submitAnswer(String.valueOf(0),"answer")).thenReturn(result);
 
         mockMvc.perform(get("/api/game/0").contentType(MediaType.APPLICATION_JSON));

@@ -1,6 +1,6 @@
 package id.ac.ui.cs.advprog.workatwebservice.service;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
+import id.ac.ui.cs.advprog.workatwebservice.model.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 

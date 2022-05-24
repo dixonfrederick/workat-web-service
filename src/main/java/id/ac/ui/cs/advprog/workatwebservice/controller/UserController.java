@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
-import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.model.User;
 import id.ac.ui.cs.advprog.workatwebservice.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,15 @@ public class UserController {
 
     @PostMapping(produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity createUser(String id) {
-        return ResponseEntity.ok(userService.createUser(id));
+    public ResponseEntity createUser(@RequestBody User user) {
+        User createdUser = userService.createUser(user);
+        return ResponseEntity.ok(createdUser);
     }
 
     @PutMapping(path = "/{id}", produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity updateUser(@PathVariable(value = "id") String id, @RequestBody GameObject gameobject) {
-        return ResponseEntity.ok(userService.updateUser(id, gameobject));
+    public ResponseEntity updateUser(@PathVariable(value = "id") String id, @RequestBody User user) {
+        return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
     @GetMapping(path = "/{id}", produces = {"application/json"})

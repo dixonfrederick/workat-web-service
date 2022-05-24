@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface UserProfileService {
     Iterable<User> getListUser();
 
-    User createUser(String id);
+    User createUser(User user);
 
-    User updateUser(String id, GameObject gameObject);
+    User updateUser(String id, User user);
 
     Optional<User> getUser(String id);
 }

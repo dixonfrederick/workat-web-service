@@ -7,15 +7,19 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "User")
+@Table(name = "discord_user")
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(name = "id", updatable = true)
+    @Column(name = "id")
     private String userId;
 
     @Column(name = "status")
     private String status;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Stats stats;
 
     public User(String userId, String status){
         this.userId = userId;

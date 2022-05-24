@@ -1,9 +1,11 @@
-package id.ac.ui.cs.advprog.workatwebservice.core;
+package id.ac.ui.cs.advprog.workatwebservice.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
@@ -23,6 +25,15 @@ public class Stats {
 
     @Column(name = "total_kalah")
     private int totalKalah;
+
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private User user;
+
+    public Stats(String id) {
+        new Stats(id, 0, 0, 0);
+    }
 
     public Stats(String id, int averageAttempt, int totalMenang, int totalKalah){
         this.id = id;

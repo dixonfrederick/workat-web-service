@@ -1,11 +1,10 @@
-package id.ac.ui.cs.advprog.workatwebservice.core;
+package id.ac.ui.cs.advprog.workatwebservice.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import id.ac.ui.cs.advprog.workatwebservice.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

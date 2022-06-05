@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor
 public class Result {
-  private int attemptsLeft;
+  private int attemptAmount;
   private String letterStates;
   private String error;
   private boolean isCorrect;

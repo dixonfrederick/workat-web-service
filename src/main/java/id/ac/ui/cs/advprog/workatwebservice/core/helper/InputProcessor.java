@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.workatwebservice.core;
+package id.ac.ui.cs.advprog.workatwebservice.core.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
+import id.ac.ui.cs.advprog.workatwebservice.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,9 @@ import reactor.core.publisher.Mono;
 public class InputProcessor{
     @Autowired
     private WebClient client;
+
+    @Autowired
+    private GameRepository gameRepository;
 
     private boolean wordIsRegistered(String attempt) {
         try {
@@ -49,8 +53,7 @@ public class InputProcessor{
 
     public Result checkIfInputIsAnswer(String input, GameObject gameObject){
         Result result = new Result();
-        int attempts = 5 - gameObject.getAttemptAmount();
-        result.setAttemptsLeft(attempts);
+        int attempts = gameObject.getAttemptAmount();
 
         if (input.length() != 5){
             result.setError("Input must have exactly 5 letters");
@@ -60,7 +63,7 @@ public class InputProcessor{
             result.setError("Word is not in dictionary");
             return result;
         }
-        else if (attempts <= 0){
+        else if (attempts >= 5){
             result.setError("Ran out of attempts");
             return result;
         }
@@ -70,7 +73,6 @@ public class InputProcessor{
             String res = "";
             boolean status;
 
-            gameObject.setAttemptAmount(gameObject.getAttemptAmount() + 1);
 
             for (int i = 0; i < 5; i++) {
                 if (wordChars.get(i).equals(answerChars.get(i))) {
@@ -87,7 +89,10 @@ public class InputProcessor{
 
             result.setLetterStates(res);
             result.setCorrect(status);
-            result.setAttemptsLeft(5 - gameObject.getAttemptAmount());
+            result.setAttemptAmount(gameObject.getAttemptAmount() + 1);
+
+            gameObject.setAttemptAmount(gameObject.getAttemptAmount() + 1);
+            gameRepository.save(gameObject);
 
             return result;
         }

@@ -2,8 +2,9 @@ package id.ac.ui.cs.advprog.workatwebservice.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import id.ac.ui.cs.advprog.workatwebservice.model.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
-import id.ac.ui.cs.advprog.workatwebservice.core.InputProcessor;
+import id.ac.ui.cs.advprog.workatwebservice.core.helper.InputProcessor;
 import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 import id.ac.ui.cs.advprog.workatwebservice.core.helper.RandomString;
 import id.ac.ui.cs.advprog.workatwebservice.repository.GameRepository;
@@ -24,6 +25,9 @@ public class GameServiceImpl implements GameService {
 
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private StatsService statsService;
 
     @Autowired
     private WebClient client;
@@ -77,5 +81,13 @@ public class GameServiceImpl implements GameService {
         GameObject game = gameRepository.findByGameId(gameId);
 
         return inputProcessor.checkIfInputIsAnswer(input, game);
+    }
+
+    @Override
+    public Stats updateUserStats(String id, GameObject gameObject){
+        if (gameObject.isFinalState() || gameObject.getAttemptAmount() == 5){
+            return statsService.updateStats(id, gameObject);
+        }
+        return null;
     }
 }

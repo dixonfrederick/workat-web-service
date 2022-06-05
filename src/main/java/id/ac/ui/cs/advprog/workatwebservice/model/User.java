@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.workatwebservice.model;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

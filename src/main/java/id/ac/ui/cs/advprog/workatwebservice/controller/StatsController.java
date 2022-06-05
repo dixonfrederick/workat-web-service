@@ -1,7 +1,7 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
-import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
+import id.ac.ui.cs.advprog.workatwebservice.model.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.service.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

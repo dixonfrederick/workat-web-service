@@ -1,7 +1,7 @@
 package id.ac.ui.cs.advprog.workatwebservice.service;
 
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
-import id.ac.ui.cs.advprog.workatwebservice.core.Stats;
+import id.ac.ui.cs.advprog.workatwebservice.model.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.repository.StatsRepository;
 import id.ac.ui.cs.advprog.workatwebservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +35,20 @@ public class StatsServiceImpl implements StatsService{
     public Stats updateStats(String id, GameObject gameObject) {
         var updatedStats = statsRepository.getById(id);
         int avg = updatedStats.getAverageAttempt();
-        updatedStats.setAverageAttempt((avg * (updatedStats.getTotalKalah() + updatedStats.getTotalMenang())
-                + gameObject.getAttemptAmount()) /
-                (updatedStats.getTotalKalah() + updatedStats.getTotalMenang() + 1));
+
+        int totalMenang = updatedStats.getTotalMenang();
+        int totalKalah = updatedStats.getTotalKalah();
+
+        updatedStats.setAverageAttempt((avg * (totalKalah + totalMenang) + gameObject.getAttemptAmount())
+                / (totalKalah + totalMenang + 1));
+
+        if (gameObject.isFinalState()){
+            updatedStats.setTotalMenang(totalMenang + 1);
+        }
+        else {
+            updatedStats.setTotalKalah(totalKalah + 1);
+        }
+
         return updatedStats;
     }
 

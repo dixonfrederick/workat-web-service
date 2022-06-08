@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.workatwebservice.controller;
 
-import id.ac.ui.cs.advprog.workatwebservice.core.answer.Result;
 import id.ac.ui.cs.advprog.workatwebservice.model.GameObject;
 import id.ac.ui.cs.advprog.workatwebservice.model.Stats;
 import id.ac.ui.cs.advprog.workatwebservice.service.GameService;
@@ -23,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = GameController.class)
+@WebMvcTest(controllers = StatsController.class)
 class StatsControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -42,7 +41,9 @@ class StatsControllerTest {
     public void setUp() {
         webClientBuilder.build();
         gameObject = new GameObject();
+        gameObject.setGameId("0");
         stats = new Stats();
+        stats.setId("0");
     }
 
     @Test
@@ -51,8 +52,10 @@ class StatsControllerTest {
         when(statsService.getListStats()).thenReturn(statsList);
 
         mockMvc.perform(get("/api/stats/")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                        .contentType(MediaType.APPLICATION_JSON).content(Mapper.mapToJson(statsList)))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value("0"));
     }
 
     @Test
@@ -81,6 +84,15 @@ class StatsControllerTest {
         mockMvc.perform(get("/api/stats/0")
                         .contentType(MediaType.APPLICATION_JSON).content(Mapper.mapToJson(stats)))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetNonExistentStats() throws Exception {
+        when(statsService.getStats("1")).thenReturn(Optional.ofNullable(stats));
+
+        mockMvc.perform(get("/api/stats/1")
+                        .contentType(MediaType.APPLICATION_JSON).content(Mapper.mapToJson(stats)))
+                .andExpect(status().isBadRequest());
     }
 
 }

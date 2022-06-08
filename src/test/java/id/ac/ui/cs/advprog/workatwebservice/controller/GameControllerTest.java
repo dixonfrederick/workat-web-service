@@ -33,6 +33,7 @@ class GameControllerTest {
     public void setUp() {
         webClientBuilder.build();
         gameObject = new GameObject();
+        gameObject.setGameId("0");
         result = new Result();
     }
 
@@ -43,6 +44,7 @@ class GameControllerTest {
         mockMvc.perform(post("/api/game/")
                         .contentType(MediaType.APPLICATION_JSON).content(Mapper.mapToJson(gameObject)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.gameId").value("0"))
                 .andExpect(jsonPath("$.attemptAmount").value(0));
 
         mockMvc.perform(get("/api/game/")

@@ -1,7 +1,6 @@
 package id.ac.ui.cs.advprog.workatwebservice.repository;
 
 import id.ac.ui.cs.advprog.workatwebservice.model.User;
-import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

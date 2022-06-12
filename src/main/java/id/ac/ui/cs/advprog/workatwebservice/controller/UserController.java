@@ -23,23 +23,23 @@ public class UserController {
 
     @PostMapping(produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        var createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
 
     @PutMapping(path = "/{id}", produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity updateUser(@PathVariable(value = "id") String id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable(value = "id") String id, @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
     @GetMapping(path = "/{id}", produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity getUser(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Optional<User>> getUser(@PathVariable(value = "id") String id) {
         Optional<User> user = userService.getUser(id);
         if (user.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(user);
     }

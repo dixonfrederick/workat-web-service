@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @WebMvcTest(controllers = UserController.class)
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

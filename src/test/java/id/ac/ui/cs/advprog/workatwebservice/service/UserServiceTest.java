@@ -24,7 +24,7 @@ import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 @EnableAsync
-public class UserServiceTest {
+class UserServiceTest {
     @Mock
     private InputProcessor inputProcessor;
 
@@ -59,7 +59,7 @@ public class UserServiceTest {
         gameObject.setFinalState(true);
         ReflectionTestUtils.setField(userProfileService, "userRepository", userRepository);
         User updatedUser = userProfileService.updateUser("0", user);
-        assertEquals(updatedUser.getUserId(), 1);
+        assertEquals("0", updatedUser.getUserId());
     }
 
     @Test

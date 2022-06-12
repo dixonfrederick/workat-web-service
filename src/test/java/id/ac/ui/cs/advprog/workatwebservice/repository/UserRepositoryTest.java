@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
     @Mock
     private UserRepository userRepository;
@@ -27,7 +27,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void whenFindItemByNameAndTypeShouldReturnCorrectObject() {
+    void whenFindItemByNameAndTypeShouldReturnCorrectObject() {
         lenient().when(userRepository.findByUserId("0")).thenReturn(user);
         assertEquals(userRepository.findByUserId("0"),user);
     }
